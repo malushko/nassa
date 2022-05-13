@@ -5,7 +5,7 @@ defmodule NASA.StartMission do
   alias NASA.Supervisor
   alias NASA.Registry
 
-  @calkText "Typing commands, for example: 28801, [[:launch, 9.807], [:land, 1.62], [:launch, 1.62], [:land, 9.807]] "
+  @calkText "Typing commands: "
 
   def main(_arg) do
     {:ok, supervisor} = Task.Supervisor.start_link

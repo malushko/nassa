@@ -17,7 +17,9 @@ defmodule NASA.NasaManager do
   def calculateFuel(a, mass \\ nil, gravity \\ nil, acum \\ [])
 
   def calculateFuel(:launch, mass, gravity, acum) do
-    case mass * gravity * 0.042 - 33 do
+    calc = mass * gravity * 0.042 - 33 |> trunc
+
+    case calc do
       item when item > 0 ->
         newArr = acum ++ [item]
         calculateFuel(:launch, item, gravity, newArr)
@@ -26,10 +28,12 @@ defmodule NASA.NasaManager do
   end
 
   def calculateFuel(:land, mass, gravity, acum)  do
-    case mass * gravity * 0.033 - 42 do
+    calc = mass * gravity * 0.033 - 42 |> trunc
+
+    case calc do
       item when item > 0 ->
         newArr = acum ++ [item]
-        calculateFuel(:launch, item, gravity, newArr)
+        calculateFuel(:land, item, gravity, newArr)
       _ -> acum |> Enum.sum
     end
   end
@@ -60,10 +64,10 @@ defmodule NASA.NasaManager do
 
   def responce(object_info) do
     green() <>
-      "#{object_info["mission"]}
+      "#{object_info["mission"]}:
       \u2022 path: #{object_info["planets_task"]}
-      \u2022 weight of equipment: #{object_info["mass_ship"]}
-      \u2022 weight of fuel: #{object_info["weight_of_fuel"]}
+      \u2022 weight of equipment: #{object_info["mass_ship"]} kg
+      \u2022 weight of fuel: #{object_info["weight_of_fuel"]} kg
       \u2022 arguments: #{object_info["arguments"]}"
     <> reset()
     |> IO.puts
@@ -80,5 +84,9 @@ defmodule NASA.NasaManager do
 
    def receiveCommand(text) do
      IO.gets(text);
+   end
+
+   def sendErrorMessage() do
+     IO.puts red() <>"You sent the wrong command! Please try again." <> reset()
    end
 end
