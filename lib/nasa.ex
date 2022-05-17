@@ -2,7 +2,6 @@ defmodule NASA.StartMission do
 
   alias NASA.NasaManager
   alias NASA.ControllerNasa
-  alias NASA.Supervisor
   alias NASA.Registry
 
   @calkText "Typing commands: "
